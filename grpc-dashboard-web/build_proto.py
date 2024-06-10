@@ -58,8 +58,8 @@ env['PATH'] = node_modules_path + os.pathsep + env['PATH']
 command = [
     'protoc',
     f'--proto_path={proto_path}',
-    f'--js_out=import_style=commonjs:{js_out}',
-    f'--grpc-web_out=import_style=commonjs,mode=grpcwebtext:{grpc_web_out}',
+    f'--js_out=import_style=commonjs,binary:{js_out}',
+    f'--grpc-web_out=import_style=commonjs,mode=grpcweb:{grpc_web_out}',
     f'--plugin=protoc-gen-grpc-web={plugin_path}',
     proto_file
 ]
@@ -75,3 +75,7 @@ if (result.returncode == 0):
 else:
     print("Output:", result.stdout)
     print("Error:", result.stderr)
+
+
+# npx pbjs -t static-module -w es6 -o helloworld_pb.js ./src/proto/helloworld.proto
+# npx pbts -o helloworld_pb.d.ts helloworld_pb.js
